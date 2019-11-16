@@ -1,0 +1,26 @@
+---
+title: "Kat_Waldo_ESM206_Ass4_Lobsters"
+author: "Kat Leigh"
+date: "11/15/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+INTRODUCTION:
+This report analyzes differences in the abundance and size of California Spiny Lobsters (Panulirus interruptus) observed at five locations along the Santa Barbara coastline by the Santa Barbara Coastal Long Term Ecological Research program (SBC LTER). Spiny lobsters play a critical predatory role in Southern California's giant kelp forests, but are threatened by fishing pressure. The California Fish and Game's Network of Marine Protected Areas (MPAs), Naples and Isla Vista, provide a refuge from fishing pressure and thus a unique oportunity to compare and contrast lobsters living in communities subject to and sheltered from fishing. To this end, this report examines:
+- A: changes in annual lobster abundance (counts) over time by site;
+- B: shifts in lobster size distributions between 2012 and 2018; and
+- C: differences between mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018.
+
+As a result of this examination, it was found that:
+- between MPA and non-MPA sites, there was XXX significant difference in lobster size in 2012, and xxx significant difference in lobster size in 2018;
+- within MPA sites, there was xxx significant mean size difference between lobsters observed in 2012 and 2018; and
+- within non-MPA sites, there was xxx significant mean size difference in lobsters observed between 2012 and 2018.
+
+These findings provide insight into kelp forest management, indicating that MPAs could be xxx effective at helping support healthy lobster populations.
+
+DATA AND METHODS: 
+The data used in this report, from the SBC LTER's two study reefs located in or near the Naples and Isla Vista MPAs, ranges from 2012 to present (2019). Observations were collected annually by divers in late summer before the start of the fishing season from two sites located within the MPAs and three located outside of the MPAs (Arroyo Quemado, Mohawk and Carpinteria). The dependent variables examined were time (the year of observation), and locaton (the site), and the independent variables examined were size (the carapace length in millimeters ) and count (the number of lobsters). Statistical difference was assessed using a two-sided t-test with a Welsh assumption, and a level of significance of 0.05. Analysis was performed using Rstudio software version 1.2.1335.
