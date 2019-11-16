@@ -24,3 +24,142 @@ These findings provide insight into kelp forest management, indicating that MPAs
 
 DATA AND METHODS: 
 The data used in this report, from the SBC LTER's two study reefs located in or near the Naples and Isla Vista MPAs, ranges from 2012 to present (2019). Observations were collected annually by divers in late summer before the start of the fishing season from two sites located within the MPAs and three located outside of the MPAs (Arroyo Quemado, Mohawk and Carpinteria). The dependent variables examined were time (the year of observation), and locaton (the site), and the independent variables examined were size (the carapace length in millimeters ) and count (the number of lobsters). Statistical difference was assessed using a two-sided t-test with a Welsh assumption, and a level of significance of 0.05. Analysis was performed using Rstudio software version 1.2.1335.
+
+```{r, message = FALSE, warning = FALSE}
+# ----
+# run libraries and read data
+# ----
+
+library(tidyverse)
+library(janitor)
+library(lubridate)
+
+lobster_df <- read_csv(here::here("data", "lobster_abundance_sbc_lter.csv"), 
+                       na = "-99999") %>% 
+  clean_names()
+
+tidy_lob <- lobster_df %>% 
+  uncount(count)
+
+```
+
+### TITLE
+
+## Results A:
+
+Visually explore changes in annual lobster abundance (counts) by site. After grouping observations to find lobster counts for each year, create a finalized data visualization (no modeling/stats needed) showing changes in annual lobster abundance at the five sites over time.
+
+```{r}
+# ----
+# Data wrangling
+# ----
+
+lob_site_yr <- tidy_lob %>%
+  group_by(year) %>% 
+  count(site)
+   
+
+# ----
+# Data plotting
+# ----
+  
+ggplot(data = lob_site_yr, aes(x = year, y = n)) +
+  geom_col(aes(fill = site), 
+           color = "black",  alpha = 0.8) +
+  scale_fill_brewer(palette = "Pastel1") + # Chose this color palette to have color stand out
+  scale_x_continuous(breaks = 2012:2018) +
+  scale_y_continuous(expand = c(0,0)) + # Removed bottom space
+  labs(x = NULL, y = "Count", fill = "Site") +
+  theme_minimal()
+```
+Caption!!!
+
+
+## Results B:
+
+Visually explore lobster size distribution shifts by comparing lobster sizes in 2012 and 2018. Visually explore the size distributions for lobsters observed at the 5 different sites in 2012, and in 2018 (i.e. you will have a total of 10 size distributions shown: for each of the 5 sites, one for 2012 and one for 2018). Make a finalized graph that clearly and professionally shows community size distributions at each site in the 2 years, allowing the reader to easily interpret distribution shifts.
+```{r}
+# ----
+# Data wrangling
+# ----
+
+lob_size_yr <- tidy_lob %>% 
+  select(year, site, size_mm) %>% 
+  filter(year == c(2012,2018))
+
+# ----
+# Data plotting
+# ----
+
+ggplot(lob_size_yr) +
+  # Made geom_violin with areas proportional to count
+  geom_violin(show.legend = FALSE, scale = "count",
+              aes(x = site, y = size_mm, fill = site)) + 
+  scale_fill_brewer(palette = "Pastel1") +
+  facet_wrap(~year) +
+  # Removed bottom space and showed full scale
+  scale_y_continuous(expand = c(0,0), limits = c(0,200)) + 
+  labs(y = "Size [mm]", x = "Site", caption = "Area is proportional to count",
+       title = "Lobster size distribution") +
+  theme_minimal()
+```
+
+## Results C:
+
+Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. Here, for each year (2012 and 2018) consolidate the size observations into only two groups: MPA and non-MPA lobsters. Then answer the following four questions: 
+
+For 2012 observations, is there a significant difference in lobster size between MPA and non-MPA sites? 
+For 2018 observations, is there a significant difference in lobster size between MPA and non-MPA sites? 
+For MPA sites only, is there a significant difference in lobsters observed in 2012 vs. 2018?
+For non-MPA sites only, is there a significant difference in lobsters observed in 2012 vs. 2018?
+
+```{r}
+# ----
+# Data wrangling
+# ----
+
+lob_mpa <- lob_size_yr %>% 
+  filter(site %in% c("IVEE", "NAPL")) 
+  
+lob_nmpa <- lob_size_yr %>% 
+  filter(site %in% c("AQUE", "CARP", "MOHK")) 
+
+# MPA 2012
+sample_mpa_12 <- lob_mpa %>%
+  filter(year == 2012) %>% 
+  pull(size_mm)
+
+# Non-MPA 2012  
+sample_nmpa_12 <- lob_nmpa %>%
+  filter(year == 2012) %>% 
+  pull(size_mm)
+
+# MPA 2018
+sample_mpa_18 <- lob_mpa %>% 
+  filter(year == 2018) %>% 
+  pull(size_mm)
+
+# Non-MPA 2018
+sample_nmpa_18 <- lob_nmpa %>% 
+  filter(year == 2018) %>% 
+  pull(size_mm)
+
+
+# 2012 observations mpa vs non-mpa   
+mn12_ttest <- t.test(sample_mpa_12, sample_nmpa_12)
+mn12_ttest
+
+# 2018 observations mpa vs non-mpa
+mn18_ttest <- t.test(sample_mpa_18, sample_nmpa_18)
+mn18_ttest
+
+# MPA sites only
+mpa_ttest <- t.test(sample_mpa_12, sample_mpa_18)
+mpa_ttest
+
+# Non MPA sites only
+nmpa_ttest <- t.test(sample_nmpa_12, sample_nmpa_18)
+nmpa_ttest
+
+```
+
