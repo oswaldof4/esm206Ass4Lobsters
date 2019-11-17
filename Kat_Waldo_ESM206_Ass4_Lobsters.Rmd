@@ -56,21 +56,33 @@ Visually explore changes in annual lobster abundance (counts) by site. After gro
 
 lob_site_yr <- tidy_lob %>%
   group_by(year) %>% 
-  count(site)
+  count(site) %>% 
+  dplyr::mutate(
+    yr = dplyr::case_when(
+      year %in% "2012" ~ "'12",
+      year %in% "2013" ~ "'13",
+      year %in% "2014" ~ "'14",
+      year %in% "2015" ~ "'15",
+      year %in% "2016" ~ "'16",
+      year %in% "2017" ~ "'17",
+      year %in% "2018" ~ "'18",
+    )
+  )
    
 
 # ----
 # Data plotting
 # ----
   
-ggplot(data = lob_site_yr, aes(x = year, y = n)) +
+ggplot(data = lob_site_yr, aes(x = yr, y = n)) +
   geom_col(aes(fill = site), 
            color = "black",  alpha = 0.8) +
   scale_fill_brewer(palette = "Pastel1") + # Chose this color palette to have color stand out
-  scale_x_continuous(breaks = 2012:2018) +
-  scale_y_continuous(expand = c(0,0)) + # Removed bottom space
+  scale_y_discrete(expand = c(0,0)) + # Removed bottom space
   labs(x = NULL, y = "Count", fill = "Site") +
-  theme_minimal()
+  theme_minimal() +
+  facet_wrap(~site) +
+  theme(panel.spacing = unit(2, "lines"))
 ```
 Caption!!!
 
