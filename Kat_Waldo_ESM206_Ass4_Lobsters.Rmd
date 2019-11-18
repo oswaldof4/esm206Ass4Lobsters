@@ -84,6 +84,7 @@ ggplot(data = lob_site_yr, aes(x = yr, y = n)) +
   facet_wrap(~site, scales = "free_x") +
   theme(panel.spacing = unit(2, "lines"))
 ```
+
 Fig. 1: Lobster Abundance per site for years 2012-2018. Note that both sites Naples (NAPL) and Isla Vista (IVEE) are MPAs.
 
 
@@ -113,8 +114,23 @@ ggplot(lob_size_yr) +
   scale_y_continuous(expand = c(0,0), limits = c(0,200)) + 
   labs(y = "Size [mm]", x = "Site", caption = "Area is proportional to count",
        title = "Lobster size distribution") +
-  theme_minimal()
+  theme_minimal()+
+  geom_vline(aes(xintercept = 5.6), color = "black", linetype = 2, lwd=.5)+
+  annotate(geom = "text",
+           x = 3,
+           y = 35,
+           label = "*",
+           color = "black",
+           size = 7)+
+  annotate(geom = "text",
+           x = 5,
+           y = 35,
+           label = "*",
+           color = "black",
+           size = 7)
 ```
+
+Fig. 2: Distribution of lobster sizes for each site for years 2012 and 2018. Note that MPA sites Naples and Isla Vista are indicated with asterisks (*).
 
 ## Results C:
 
@@ -159,19 +175,19 @@ sample_nmpa_18 <- lob_nmpa %>%
 
 # 2012 observations mpa vs non-mpa   
 mn12_ttest <- t.test(sample_mpa_12, sample_nmpa_12)
-mn12_ttest
+mn12_ttest # sig diff
 
 # 2018 observations mpa vs non-mpa
 mn18_ttest <- t.test(sample_mpa_18, sample_nmpa_18)
-mn18_ttest
+mn18_ttest # sig diff
 
 # MPA sites only
 mpa_ttest <- t.test(sample_mpa_12, sample_mpa_18)
-mpa_ttest
+mpa_ttest # sig diff
 
 # Non MPA sites only
 nmpa_ttest <- t.test(sample_nmpa_12, sample_nmpa_18)
-nmpa_ttest
+nmpa_ttest #not sig diff.
 
 ```
 
