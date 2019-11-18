@@ -219,13 +219,13 @@ n_mpa_2012 <- sum(!is.na(sample_mpa_12["size"]))
 n_nonmpa_2012 <- sum(!is.na(sample_nmpa_12["size"]))
 n_mpa_2018 <- sum(!is.na(sample_mpa_18["size"]))
 n_nonmpa_2018 <- sum(!is.na(sample_nmpa_18["size"]))
+
 # Wrangle data for statistics summary table
 lobster_sum_tab <- lob_size_yr %>%
-filter(year %in% c(2012, 2018)) %>%
   dplyr::mutate(
     MPA_Status = dplyr::case_when(
       site %in% "AQUE" ~ "Non-MPA",
-      site %in% "CARPE" ~ "Non-MPA",
+      site %in% "CARP" ~ "Non-MPA",
       site %in% "IVEE" ~ "MPA",
       site %in% "MOHK" ~ "Non-MPA",
       site %in% "NAPL" ~ "MPA"

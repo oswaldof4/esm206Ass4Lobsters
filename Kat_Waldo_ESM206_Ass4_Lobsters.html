@@ -590,13 +590,13 @@ n_mpa_2012 &lt;- sum(!is.na(sample_mpa_12[&quot;size&quot;]))
 n_nonmpa_2012 &lt;- sum(!is.na(sample_nmpa_12[&quot;size&quot;]))
 n_mpa_2018 &lt;- sum(!is.na(sample_mpa_18[&quot;size&quot;]))
 n_nonmpa_2018 &lt;- sum(!is.na(sample_nmpa_18[&quot;size&quot;]))
+
 # Wrangle data for statistics summary table
 lobster_sum_tab &lt;- lob_size_yr %&gt;%
-filter(year %in% c(2012, 2018)) %&gt;%
   dplyr::mutate(
     MPA_Status = dplyr::case_when(
       site %in% &quot;AQUE&quot; ~ &quot;Non-MPA&quot;,
-      site %in% &quot;CARPE&quot; ~ &quot;Non-MPA&quot;,
+      site %in% &quot;CARP&quot; ~ &quot;Non-MPA&quot;,
       site %in% &quot;IVEE&quot; ~ &quot;MPA&quot;,
       site %in% &quot;MOHK&quot; ~ &quot;Non-MPA&quot;,
       site %in% &quot;NAPL&quot; ~ &quot;MPA&quot;
@@ -661,7 +661,7 @@ MPA
 65.68750
 </td>
 <td style="text-align:right;">
-10.750000
+10.75000
 </td>
 <td style="text-align:right;">
 16
@@ -678,7 +678,7 @@ MPA
 77.79133
 </td>
 <td style="text-align:right;">
-12.108358
+12.10836
 </td>
 <td style="text-align:right;">
 623
@@ -692,13 +692,13 @@ Non-MPA
 2012
 </td>
 <td style="text-align:right;">
-75.54098
+75.87000
 </td>
 <td style="text-align:right;">
-11.073352
+13.76400
 </td>
 <td style="text-align:right;">
-61
+100
 </td>
 </tr>
 <tr>
@@ -709,47 +709,13 @@ Non-MPA
 2018
 </td>
 <td style="text-align:right;">
-72.02752
+73.91429
 </td>
 <td style="text-align:right;">
-9.262088
+11.22656
 </td>
 <td style="text-align:right;">
-109
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-2012
-</td>
-<td style="text-align:right;">
-76.38462
-</td>
-<td style="text-align:right;">
-17.306244
-</td>
-<td style="text-align:right;">
-39
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-2018
-</td>
-<td style="text-align:right;">
-75.11696
-</td>
-<td style="text-align:right;">
-12.190561
-</td>
-<td style="text-align:right;">
-171
+280
 </td>
 </tr>
 </tbody>
