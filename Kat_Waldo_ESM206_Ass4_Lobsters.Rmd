@@ -75,16 +75,16 @@ lob_site_yr <- tidy_lob %>%
 # ----
   
 ggplot(data = lob_site_yr, aes(x = yr, y = n)) +
-  geom_col(aes(fill = site), 
+  geom_col(aes(fill = site), show.legend = FALSE, 
            color = "black",  alpha = 0.8) +
   scale_fill_brewer(palette = "Pastel1") + # Chose this color palette to have color stand out
   scale_y_discrete(expand = c(0,0)) + # Removed bottom space
-  labs(x = NULL, y = "Count", fill = "Site") +
+  labs(x = "Year", y = "Number of Lobsters", title = "Number of Lobsters at Each Site from 2012-2018", fill = "Site") +
   theme_minimal() +
-  facet_wrap(~site) +
+  facet_wrap(~site, scales = "free_x") +
   theme(panel.spacing = unit(2, "lines"))
 ```
-Caption!!!
+Fig. 1: Lobster Abundance per site for years 2012-2018. Note that both sites Naples (NAPL) and Isla Vista (IVEE) are MPAs.
 
 
 ## Results B:
